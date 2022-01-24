@@ -1,0 +1,59 @@
+#built application files
+*.apk
+*.ap_
+
+# fastlane
+fastlane/Appfile
+fastlane/report.xml
+
+# Gemfile
+Gemfile.*
+Gemfile
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Gradle generation.
+build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+api.properties
+
+# Windows thumbnail db
+Thumbs.db
+
+# OSX files
+.DS_Store
+
+# Eclipse project files
+.classpath
+.project
+
+# Android Studio
+# Intellij IDEA (see https://intellij-support.jetbrains.com/entries/23393067)
+.idea
+.idea/
+.gradle
+.gradle/
+*.iml
+captures/
+reports/
+
+# Older project format
+/*/out
+/*/*/build
+*.iws
+*.ipr
+/*.iml
+*~
+~*
+*.swp
+*.log
