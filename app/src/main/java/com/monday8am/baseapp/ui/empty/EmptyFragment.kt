@@ -5,13 +5,11 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButton
 import com.monday8am.baseapp.R
-import com.monday8am.baseapp.ui.SharedViewModel
 import com.monday8am.baseapp.ui.launchAndRepeatWithViewLifecycle
 import com.monday8am.baseapp.ui.main.DataState
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +20,6 @@ import timber.log.Timber
 class EmptyFragment : Fragment(R.layout.empty_fragment) {
 
     private val viewModel: EmptyViewModel by viewModels()
-    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var btnAction: MaterialButton
 
@@ -55,7 +52,6 @@ class EmptyFragment : Fragment(R.layout.empty_fragment) {
 
     private fun setupBtns() {
         btnAction.setOnClickListener {
-            sharedViewModel.printSharedSlowIndex()
         }
     }
 

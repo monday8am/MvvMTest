@@ -2,13 +2,14 @@ package com.monday8am.baseapp.ui.empty
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.monday8am.baseapp.domain.Result
-import com.monday8am.baseapp.domain.usecase.GetFlowIndex
+import com.monday8am.baseapp.domain.usecase.GetUsers
 import com.monday8am.baseapp.ui.main.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -19,7 +20,7 @@ data class EmptyUiState(
 
 @HiltViewModel
 class EmptyViewModel @Inject constructor(
-    private val getFlowIndex: GetFlowIndex
+    private val getFlowIndex: GetUsers
 ) : ViewModel(), CoroutineScope {
 
     private val uiState = MutableStateFlow(EmptyUiState())
@@ -27,19 +28,6 @@ class EmptyViewModel @Inject constructor(
 
     init {
         uiState.update { it.copy(state = DataState.Loading) }
-
-        launch {
-            getFlowIndex(Unit).collect { result ->
-                when (result) {
-                    is Result.Success -> uiState.update {
-                        it.copy(index = result.data, state = DataState.Idle)
-                    }
-                    is Result.Error -> uiState.update {
-                        it.copy(state = DataState.Error("Message!"))
-                    }
-                }
-            }
-        }
     }
 
     override val coroutineContext: CoroutineContext
