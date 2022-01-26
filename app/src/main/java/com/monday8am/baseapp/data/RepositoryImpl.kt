@@ -10,7 +10,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -23,7 +22,8 @@ class RepositoryImpl @Inject constructor(
     private val internalJob = Job()
 
     private val users = listOf(
-        User("Anton", "test1", "test2", "https://ptitchevreuil.github.io/mojo/jean.jpg")
+        User("Anton", "test1", "test2", "https://ptitchevreuil.github.io/mojo/jean.jpg"),
+        User("Anton1", "test2", "test3", "https://ptitchevreuil.github.io/mojo/jean.jpg")
     )
 
     override fun getUsers(): Flow<List<User>> {

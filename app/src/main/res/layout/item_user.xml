@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="82dp"
-    tools:background="@color/black">
+    tools:background="@color/dark_grey">
 
     <FrameLayout
         android:id="@+id/thumbnail_view"
@@ -24,87 +24,60 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@null"
-            app:srcCompat="@drawable/img_sound_wave"
             tools:visibility="gone" />
 
         <ImageView
             android:id="@+id/thumbnail_image_view"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:contentDescription="@string/common_play_pause"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/avatars" />
 
     </FrameLayout>
 
-    <ImageView
-        android:id="@+id/play_pause_icon"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:alpha="0.64"
-        android:background="@null"
-        app:layout_constraintBottom_toBottomOf="@id/thumbnail_view"
-        app:layout_constraintEnd_toEndOf="@id/thumbnail_view"
-        app:layout_constraintStart_toStartOf="@id/thumbnail_view"
-        app:layout_constraintTop_toTopOf="@id/thumbnail_view"
-        app:srcCompat="@drawable/ic_play_24" />
-
     <TextView
         android:id="@+id/title_view"
-        style="@style/AppTextAppearance.Subtitle2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_12"
-        android:layout_marginEnd="@dimen/spacing_6"
-        android:layout_marginBottom="@dimen/spacing_2"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="2dp"
         android:ellipsize="end"
         android:lineSpacingExtra="3dp"
         android:maxLines="1"
         android:textAlignment="textStart"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/artist_view"
-        app:layout_constraintEnd_toStartOf="@id/add_button"
+        app:layout_constraintBottom_toTopOf="@id/subtitle_view"
+        app:layout_constraintEnd_toStartOf="@id/remove_button"
         app:layout_constraintStart_toEndOf="@id/thumbnail_view"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="@sample/names" />
+        tools:text="Title" />
 
     <TextView
-        android:id="@+id/artist_view"
-        style="@style/AppTextAppearance.Caption"
+        android:id="@+id/subtitle_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_12"
-        android:layout_marginTop="@dimen/spacing_2"
-        android:layout_marginEnd="@dimen/spacing_6"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="6dp"
         android:ellipsize="end"
         android:lineSpacingExtra="0dp"
         android:maxLines="1"
         android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/add_button"
+        app:layout_constraintEnd_toStartOf="@id/remove_button"
         app:layout_constraintStart_toEndOf="@id/thumbnail_view"
         app:layout_constraintTop_toBottomOf="@+id/title_view"
-        tools:text="@sample/names" />
+        tools:text="Subtitle" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/add_button"
-        style="@style/AppButton.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/ic_add_white_16dp"
+        android:id="@+id/remove_button"
+        android:background="@color/white"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearance="@style/AppShapeAppearance.Button.Square" />
-
-    <View
-        android:id="@+id/progress_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/spacing_2"
-        android:background="@color/action"
-        android:transformPivotX="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

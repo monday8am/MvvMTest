@@ -54,7 +54,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun printSlowIndex() {
+    fun removeUserFronList(userId: String) {
+        launch {
+            removeUser(userId)
+        }
     }
 
     override val coroutineContext: CoroutineContext
