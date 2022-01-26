@@ -5,8 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "user_table")
 data class CachedUser(
-    @PrimaryKey val id: String,
-    val name: String,
+    @PrimaryKey val name: String,
     val position: String,
     val platform: String,
     val pic: String,

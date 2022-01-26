@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margin_side">20dp</dimen>
+    <dimen name="item_margin_side">6dp</dimen>
+
+    <dimen name="divider">0.5dp</dimen>
+
+    <!-- BlockerLoadingView -->
+    <dimen name="loading_blocker_view_size">50dp</dimen>
+    <dimen name="loading_blocker_view_padding">14dp</dimen>
+    <dimen name="loading_blocker_view_padding_top">13dp</dimen>
+    <dimen name="loading_blocker_view_margin_from_center">-130dp</dimen>
+
+    <!-- Preview toolbar -->
+    <dimen name="defaultToolbarHeight">70dp</dimen>
+    <dimen name="expandedToolbarHeight">176dp</dimen>
+    <dimen name="hslToolbarHeight">240dp</dimen>
+    <dimen name="colorToolbarHeight">120dp</dimen>
+
+    <!-- Text Size -->
+    <dimen name="text_size_cover_small">11sp</dimen>
+    <dimen name="text_size_cover_medium">13sp</dimen>
+    <dimen name="text_size_cover_large">13sp</dimen>
+
+    <!-- Overlay Music Cover -->
+    <dimen name="cover_small_width">282dp</dimen>
+    <dimen name="cover_medium_width">175dp</dimen>
+    <dimen name="cover_large_width">140dp</dimen>
+    <dimen name="cover_image_medium_width">40dp</dimen>
+    <dimen name="cover_image_large_width">127dp</dimen>
+
+    <!-- Story Timeline -->
+    <dimen name="storyTimelineHeight">50dp</dimen>
+    <dimen name="timelineIndicatorHeight">60dp</dimen>
+    <dimen name="thumb_width">30dp</dimen>
+    <dimen name="thumb_height">30dp</dimen>
+
+    <!-- Gestures threshold -->
+    <dimen name="gesture_defaultMoveThreshold">16dp</dimen>
+
+    <!-- Filter sample bitmap size -->
+    <dimen name="filter_thumb_width">58dp</dimen>
+    <dimen name="filter_thumb_height">55dp</dimen>
+
+</resources>

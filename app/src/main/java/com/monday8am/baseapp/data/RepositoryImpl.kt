@@ -8,7 +8,6 @@ import com.monday8am.baseapp.domain.model.User
 import com.monday8am.baseapp.domain.repo.Repository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import java.util.*
@@ -31,9 +30,9 @@ class RepositoryImpl @Inject constructor(
         launch {
             try {
                 Timber.d("Here!")
-                val haveUsers = database.userDao().getUsers().isEmpty()
-                if (haveUsers.not()) {
-                    //val users = remoteDataSource.getUsers()
+                val isEmpty = database.userDao().getUsers().isEmpty()
+                if (isEmpty) {
+                    //val users1 = remoteDataSource.getUsers()
                     database.userDao().insert(users.map { it.toCached() })
                 }
             } catch (e: Exception) {
@@ -67,7 +66,6 @@ class RepositoryImpl @Inject constructor(
 
     private fun User.toCached(): CachedUser {
         return CachedUser(
-            id = UUID.randomUUID().toString(),
             name = name,
             position = position,
             platform = platform,

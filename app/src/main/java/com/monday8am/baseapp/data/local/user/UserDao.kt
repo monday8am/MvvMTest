@@ -21,7 +21,7 @@ interface UserDao {
     @Query("SELECT * FROM user_table")
     suspend fun getUsers(): List<CachedUser>
 
-    @Query("DELETE FROM user_table WHERE id = :id")
+    @Query("DELETE FROM user_table WHERE name = :id")
     suspend fun delete(id: String)
 
     @Query("DELETE FROM user_table")

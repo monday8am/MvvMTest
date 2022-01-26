@@ -50,6 +50,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
     kapt "androidx.room:room-compiler:2.3.0"
     implementation "androidx.room:room-ktx:2.3.0"
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
 
     // DI
     implementation "com.google.dagger:hilt-android:2.40.5"
