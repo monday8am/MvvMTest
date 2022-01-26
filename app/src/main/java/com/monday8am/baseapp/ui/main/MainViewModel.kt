@@ -5,15 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.monday8am.baseapp.domain.Result
 import com.monday8am.baseapp.domain.model.SortMethod
 import com.monday8am.baseapp.domain.model.User
-import com.monday8am.baseapp.domain.usecase.GetSortMethod
-import com.monday8am.baseapp.domain.usecase.GetUsers
-import com.monday8am.baseapp.domain.usecase.RemoveUser
+import com.monday8am.baseapp.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import okhttp3.internal.userAgent
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
+import kotlin.random.Random
 
 sealed class DataState {
     object Idle : DataState()
@@ -30,7 +30,8 @@ data class MainUiState(
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getUsers: GetUsers,
-    private val getSortMethod: GetSortMethod,
+    private val saveSortMethod: SaveSortMethod,
+    private val addUser: AddUser,
     private val removeUser: RemoveUser
 ) : ViewModel(), CoroutineScope {
 
@@ -54,9 +55,30 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun addRandomUser() {
+        launch {
+            val user = User(
+                "Anton - " + Random.nextInt(0, 10000000),
+                "Dev",
+                "Android",
+                ""
+            )
+            addUser(user)
+        }
+    }
+
     fun removeUserFronList(userId: String) {
         launch {
             removeUser(userId)
+        }
+    }
+
+    fun sortItems() {
+        launch {
+            saveSortMethod(Unit)
+            uiState.update { state ->
+                state.copy(users = state.users.sortedBy { it.name })
+            }
         }
     }
 

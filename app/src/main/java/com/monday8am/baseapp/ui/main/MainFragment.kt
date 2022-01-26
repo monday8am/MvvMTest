@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
@@ -18,6 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.monday8am.baseapp.R
 import com.monday8am.baseapp.domain.model.User
 import com.monday8am.baseapp.ui.ScreenNavigator
@@ -36,6 +38,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     private val viewModel: MainViewModel by viewModels()
 
     private lateinit var userContainer: LinearLayout
+    private lateinit var addBtn: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         userContainer = view.findViewById(R.id.user_container)
+        addBtn = view.findViewById(R.id.btn_add_user)
         setupToolbar()
 
         launchAndRepeatWithViewLifecycle {
@@ -59,10 +63,13 @@ class MainFragment : Fragment(R.layout.main_fragment) {
                 }
             }
         }
+
+        addBtn.setOnClickListener {
+            viewModel.addRandomUser()
+        }
     }
 
     private fun addUsers(users: List<User>) {
-        Timber.d("Users: $users")
         val userItemHeight = dp2px(requireContext(), 82)
         userContainer.removeAllViews()
 
@@ -73,7 +80,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
                 userItemHeight,
                 Gravity.START
             )
-            //view.translationY = userItemHeight.toFloat() * index.toFloat()
+
             val deleteBtn = view.findViewById<MaterialButton>(R.id.remove_button)
             val titleText = view.findViewById<TextView>(R.id.title_view)
             val subtitleTxt = view.findViewById<TextView>(R.id.subtitle_view)
@@ -97,8 +104,19 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     }
 
     private fun setupToolbar() {
+        setHasOptionsMenu(true)
         (requireActivity() as? AppCompatActivity)?.supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(false)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.sort -> {
+                viewModel.sortItems()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

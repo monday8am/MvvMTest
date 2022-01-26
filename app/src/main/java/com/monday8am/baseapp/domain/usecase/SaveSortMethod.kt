@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
-open class GetSortMethod @Inject constructor(
+open class SaveSortMethod @Inject constructor(
     private val repository: Repository,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : UseCase<Unit, Unit>(defaultDispatcher) {

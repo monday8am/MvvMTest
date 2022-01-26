@@ -30,9 +30,9 @@ class RepositoryImpl @Inject constructor(
         launch {
             try {
                 Timber.d("Here!")
+                val users1 = remoteDataSource.getUsers()
                 val isEmpty = database.userDao().getUsers().isEmpty()
                 if (isEmpty) {
-                    //val users1 = remoteDataSource.getUsers()
                     database.userDao().insert(users.map { it.toCached() })
                 }
             } catch (e: Exception) {
