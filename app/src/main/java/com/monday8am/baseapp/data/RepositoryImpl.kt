@@ -6,7 +6,11 @@ import com.monday8am.baseapp.data.remote.RemoteClient
 import com.monday8am.baseapp.di.DefaultDispatcher
 import com.monday8am.baseapp.domain.model.User
 import com.monday8am.baseapp.domain.repo.Repository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
@@ -21,18 +25,12 @@ class RepositoryImpl @Inject constructor(
 
     private val internalJob = Job()
 
-    private val users = listOf(
-        User("Anton", "test1", "test2", "https://ptitchevreuil.github.io/mojo/jean.jpg"),
-        User("Anton1", "test2", "test3", "https://ptitchevreuil.github.io/mojo/jean.jpg")
-    )
-
     override fun getUsers(): Flow<List<User>> {
         launch {
             try {
-                Timber.d("Here!")
-                val users1 = remoteDataSource.getUsers()
                 val isEmpty = database.userDao().getUsers().isEmpty()
                 if (isEmpty) {
+                    val users = remoteDataSource.getUsers()
                     database.userDao().insert(users.map { it.toCached() })
                 }
             } catch (e: Exception) {

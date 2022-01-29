@@ -10,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import okhttp3.internal.userAgent
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 import kotlin.random.Random

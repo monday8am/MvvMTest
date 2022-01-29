@@ -100,7 +100,6 @@ class MainFragment : Fragment(R.layout.main_fragment) {
             userContainer.addView(view)
         }
         userContainer.invalidate()
-
     }
 
     private fun setupToolbar() {

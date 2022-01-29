@@ -8,6 +8,6 @@ data class CachedUser(
     @PrimaryKey val name: String,
     val position: String,
     val platform: String,
-    val pic: String,
+    val pic: String? = null,
     val updatedAt: Long = System.currentTimeMillis()
 )

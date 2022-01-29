@@ -19,7 +19,7 @@ class RetrofitClientFactory(private val serializer: Json) {
 
         val contentType = "application/json".toMediaType()
         return Retrofit.Builder()
-            .baseUrl("https://ptitchevreuil.github.io/")
+            .baseUrl("https://monday8am.github.io/")
             .addConverterFactory(serializer.asConverterFactory(contentType))
             .client(client)
             .build()
