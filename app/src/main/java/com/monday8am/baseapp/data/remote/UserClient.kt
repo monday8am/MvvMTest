@@ -3,8 +3,8 @@ package com.monday8am.baseapp.data.remote
 import com.monday8am.baseapp.domain.model.User
 import retrofit2.http.GET
 
-interface RemoteClient {
+interface UserClient {
 
-    @GET("mojo/team.json")
+    @GET("team.json")
     suspend fun getUsers(): List<User>
 }

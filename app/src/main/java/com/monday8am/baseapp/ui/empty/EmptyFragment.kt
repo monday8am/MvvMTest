@@ -32,13 +32,11 @@ class EmptyFragment : Fragment(R.layout.empty_fragment) {
         setupBtns()
 
         launchAndRepeatWithViewLifecycle {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.emptyUiState.collect {
-                    when (it.state) {
-                        DataState.Idle -> Timber.d("Update UI! ${it.index}")
-                        DataState.Loading -> Timber.d("Loading")
-                        is DataState.Error -> Timber.d("Error! ${it.state.message}")
-                    }
+            viewModel.emptyUiState.collect {
+                when (it.state) {
+                    DataState.Idle -> Timber.d("Update UI! ${it.index}")
+                    DataState.Loading -> Timber.d("Loading")
+                    is DataState.Error -> Timber.d("Error! ${it.state.message}")
                 }
             }
         }

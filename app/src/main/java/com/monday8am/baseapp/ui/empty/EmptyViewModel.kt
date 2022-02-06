@@ -2,7 +2,7 @@ package com.monday8am.baseapp.ui.empty
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.monday8am.baseapp.domain.usecase.GetUsers
+import com.monday8am.baseapp.domain.usecase.user.GetUsers
 import com.monday8am.baseapp.ui.main.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +20,7 @@ data class EmptyUiState(
 
 @HiltViewModel
 class EmptyViewModel @Inject constructor(
-    private val getFlowIndex: GetUsers
+    private val getUsers: GetUsers
 ) : ViewModel(), CoroutineScope {
 
     private val uiState = MutableStateFlow(EmptyUiState())

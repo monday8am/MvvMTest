@@ -3,16 +3,21 @@ package com.monday8am.baseapp.ui.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.monday8am.baseapp.domain.Result
-import com.monday8am.baseapp.domain.model.SortMethod
-import com.monday8am.baseapp.domain.model.User
-import com.monday8am.baseapp.domain.usecase.*
+import com.monday8am.baseapp.domain.data
+import com.monday8am.baseapp.domain.model.UserLocation
+import com.monday8am.baseapp.domain.usecase.location.GetLocations
+import com.monday8am.baseapp.domain.usecase.location.IsLocationRequested
+import com.monday8am.baseapp.domain.usecase.location.RefreshLocations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
-import kotlin.random.Random
 
 sealed class DataState {
     object Idle : DataState()
@@ -22,16 +27,15 @@ sealed class DataState {
 
 data class MainUiState(
     val state: DataState = DataState.Idle,
-    val users: List<User> = listOf(),
-    val sortMethod: SortMethod = SortMethod.NAME
+    val isLocationRequested: Boolean = false,
+    val locations: List<UserLocation> = listOf()
 )
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getUsers: GetUsers,
-    private val saveSortMethod: SaveSortMethod,
-    private val addUser: AddUser,
-    private val removeUser: RemoveUser
+    private val getLocations: GetLocations,
+    private val isLocationRequested: IsLocationRequested,
+    refreshLocations: RefreshLocations
 ) : ViewModel(), CoroutineScope {
 
     private val uiState = MutableStateFlow(MainUiState())
@@ -39,12 +43,13 @@ class MainViewModel @Inject constructor(
 
     init {
         uiState.update { it.copy(state = DataState.Loading) }
+        refreshLocations(Unit)
 
         launch {
-            getUsers(Unit).collect { result ->
+            getLocations(Unit).collect { result ->
                 when (result) {
                     is Result.Success -> uiState.update {
-                        it.copy(users = result.data, state = DataState.Idle)
+                        it.copy(locations = result.data, state = DataState.Idle)
                     }
                     is Result.Error -> uiState.update {
                         it.copy(state = DataState.Error("Message!"))
@@ -52,31 +57,12 @@ class MainViewModel @Inject constructor(
                 }
             }
         }
-    }
 
-    fun addRandomUser() {
         launch {
-            val user = User(
-                "Anton - " + Random.nextInt(0, 10000000),
-                "Dev",
-                "Android",
-                ""
-            )
-            addUser(user)
-        }
-    }
-
-    fun removeUserFronList(userId: String) {
-        launch {
-            removeUser(userId)
-        }
-    }
-
-    fun sortItems() {
-        launch {
-            saveSortMethod(Unit)
-            uiState.update { state ->
-                state.copy(users = state.users.sortedBy { it.name })
+            isLocationRequested(Unit).collect { result ->
+                uiState.update {
+                    it.copy(isLocationRequested = result.data ?: false)
+                }
             }
         }
     }

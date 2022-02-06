@@ -1,27 +1,27 @@
 package com.monday8am.baseapp.data
 
-import com.monday8am.baseapp.data.local.UserDatabase
+import com.monday8am.baseapp.data.local.AppDatabase
 import com.monday8am.baseapp.data.local.user.CachedUser
-import com.monday8am.baseapp.data.remote.RemoteClient
+import com.monday8am.baseapp.data.remote.UserClient
 import com.monday8am.baseapp.di.DefaultDispatcher
 import com.monday8am.baseapp.domain.model.User
-import com.monday8am.baseapp.domain.repo.Repository
+import com.monday8am.baseapp.domain.repo.UserRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class RepositoryImpl @Inject constructor(
-    private val remoteDataSource: RemoteClient,
-    private val database: UserDatabase,
+class UserRepositoryImpl @Inject constructor(
+    private val userDataSource: UserClient,
+    private val database: AppDatabase,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : Repository, CoroutineScope {
+) : UserRepository, CoroutineScope {
 
     private val internalJob = Job()
 
@@ -30,7 +30,7 @@ class RepositoryImpl @Inject constructor(
             try {
                 val isEmpty = database.userDao().getUsers().isEmpty()
                 if (isEmpty) {
-                    val users = remoteDataSource.getUsers()
+                    val users = userDataSource.getUsers()
                     database.userDao().insert(users.map { it.toCached() })
                 }
             } catch (e: Exception) {
@@ -47,10 +47,6 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun removeUser(userId: String) {
         database.userDao().delete(userId)
-    }
-
-    override suspend fun sort() {
-        TODO("Not yet implemented")
     }
 
     private fun CachedUser.toUser(): User {
